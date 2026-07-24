@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { formatCurrency } from '../utils/format';
 import { useCart } from '../hooks/useCart';
+import { Link } from 'react-router-dom';
 
 export default function MenuCard({ item }) {
   const { addItem } = useCart();
@@ -14,7 +15,7 @@ export default function MenuCard({ item }) {
 
   return (
     <article className="card group flex flex-col overflow-hidden transition-transform hover:-translate-y-0.5">
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-char-800">
+    <Link to={`/menu/${item._id}`} className="relative block aspect-[4/3] w-full overflow-hidden bg-char-800">
         {item.imageUrl ? (
           <img
             src={item.imageUrl}
@@ -35,11 +36,13 @@ export default function MenuCard({ item }) {
             Sold out for today
           </span>
         )}
-      </div>
+      </Link>
 
       <div className="flex flex-1 flex-col gap-3 p-4">
         <div className="flex items-start justify-between gap-3">
-          <h3 className="text-lg leading-snug">{item.name}</h3>
+         <h3 className="text-lg leading-snug">
+  <Link to={`/menu/${item._id}`} className="hover:text-turmeric">{item.name}</Link>
+</h3>
           <span className="whitespace-nowrap font-mono text-sm text-turmeric">{formatCurrency(item.price)}</span>
         </div>
         <p className="line-clamp-2 flex-1 text-sm text-ivory-300/60">{item.description}</p>

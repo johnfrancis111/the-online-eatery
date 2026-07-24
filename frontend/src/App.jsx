@@ -13,6 +13,7 @@ import Checkout from './pages/Checkout.jsx';
 import OrderHistory from './pages/OrderHistory.jsx';
 import OrderDetail from './pages/OrderDetail.jsx';
 import NotFound from './pages/NotFound.jsx';
+import MealDetail from './pages/MealDetail.jsx';
 
 import Dashboard from './pages/admin/Dashboard.jsx';
 import MenuManage from './pages/admin/MenuManage.jsx';
@@ -27,6 +28,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/menu/:id" element={<MealDetail />} />
 
         {/* Requires a logged-in user (customer or admin) */}
         <Route element={<ProtectedRoute />}>
