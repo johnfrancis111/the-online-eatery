@@ -10,6 +10,8 @@ export default function Home() {
   const [pagination, setPagination] = useState({ page: 1, totalPages: 1 });
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('');
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -24,6 +26,8 @@ export default function Home() {
     const params = { page, limit: 12 };
     if (search) params.search = search;
     if (category) params.category = category;
+    if (minPrice) params.minPrice = minPrice;
+    if (maxPrice) params.maxPrice = maxPrice;
 
     getMenuItems(params)
       .then((res) => {
@@ -32,12 +36,27 @@ export default function Home() {
       })
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
-  }, [search, category, page]);
+  }, [search, category, minPrice, maxPrice, page]);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     setPage(1);
     setSearch(e.target.elements.search.value.trim());
+  };
+
+  const handlePriceSubmit = (e) => {
+    e.preventDefault();
+    setPage(1);
+    const min = e.target.elements.minPrice.value.trim();
+    const max = e.target.elements.maxPrice.value.trim();
+    setMinPrice(min);
+    setMaxPrice(max);
+  };
+
+  const clearPriceFilter = () => {
+    setPage(1);
+    setMinPrice('');
+    setMaxPrice('');
   };
 
   return (
@@ -50,7 +69,7 @@ export default function Home() {
         </p>
       </section>
 
-      <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <form onSubmit={handleSearchSubmit} className="flex w-full max-w-sm gap-2">
           <input
             name="search"
@@ -88,6 +107,37 @@ export default function Home() {
           ))}
         </div>
       </div>
+
+      <form onSubmit={handlePriceSubmit} className="mb-8 flex flex-wrap items-center gap-2">
+        <label className="text-xs text-ivory-300/60">Price:</label>
+        <input
+          name="minPrice"
+          type="number"
+          min="0"
+          step="0.01"
+          defaultValue={minPrice}
+          placeholder="Min $"
+          className="field-input !w-24"
+        />
+        <span className="text-xs text-ivory-300/60">to</span>
+        <input
+          name="maxPrice"
+          type="number"
+          min="0"
+          step="0.01"
+          defaultValue={maxPrice}
+          placeholder="Max $"
+          className="field-input !w-24"
+        />
+        <button type="submit" className="btn-secondary !px-3 !py-1.5 text-xs">
+          Apply
+        </button>
+        {(minPrice || maxPrice) && (
+          <button type="button" onClick={clearPriceFilter} className="btn-ghost !px-3 !py-1.5 text-xs">
+            Clear
+          </button>
+        )}
+      </form>
 
       {loading && <Spinner full />}
 
