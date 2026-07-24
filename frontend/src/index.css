@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-char-950 text-ivory font-body antialiased;
+    background-image: radial-gradient(circle at 1px 1px, rgba(250, 244, 233, 0.05) 1px, transparent 0);
+    background-size: 22px 22px;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display text-ivory;
+  }
+
+  :focus-visible {
+    outline: 2px solid theme('colors.turmeric.DEFAULT');
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 font-body font-semibold text-sm transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-primary {
+    @apply btn bg-pepper text-ivory hover:bg-pepper-600 active:bg-pepper-700;
+  }
+  .btn-secondary {
+    @apply btn bg-turmeric text-char-950 hover:bg-turmeric-400;
+  }
+  .btn-ghost {
+    @apply btn bg-transparent text-ivory border border-ivory/25 hover:border-ivory/60;
+  }
+  .field-label {
+    @apply block text-xs font-semibold uppercase tracking-wide text-ivory-300/70 mb-1.5;
+  }
+  .field-input {
+    @apply w-full rounded-lg bg-char-900 border border-ivory-300/15 px-3.5 py-2.5 text-ivory placeholder:text-ivory-300/30 focus:border-turmeric outline-none transition-colors;
+  }
+  .card {
+    @apply bg-char-900 border border-ivory-300/10 rounded-2xl shadow-pot;
+  }
+  .eyebrow {
+    @apply font-mono text-xs uppercase tracking-[0.2em] text-turmeric;
+  }
+}
